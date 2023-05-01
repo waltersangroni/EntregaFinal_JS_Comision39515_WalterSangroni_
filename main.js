@@ -99,7 +99,7 @@ while(respuestaUsuario != "0") {
 mostrarCarrito();
 
 
-// Practica
+// Practicando JS
 
 /*let miOpcion = generarOpcion();
 let respuesta = prompt("piedra")
@@ -157,43 +157,43 @@ function ganeYo() {
 
 // Lista de tareas pendientes que permita agregar, eliminar y marcar tareas como completadas.
 
-function Tarea(trabajo, horas, boolCompletado) {
-    this.trabajo = trabajo;
-    this.horas = horas;
-    this.boolCompletado = boolCompletado;
-  }
+// function Tarea(trabajo, horas, boolCompletado) {
+//     this.trabajo = trabajo;
+//     this.horas = horas;
+//     this.boolCompletado = boolCompletado;
+//   }
 
-  const tareaAlbanil = new Tarea("Albañil", 8, true);
-  const tareaFotografo = new Tarea("Fotografo", 8, false);
-  const tareaProgramador = new Tarea("Programador", 8, true);
+//   const tareaAlbanil = new Tarea("Albañil", 8, true);
+//   const tareaFotografo = new Tarea("Fotografo", 8, false);
+//   const tareaProgramador = new Tarea("Programador", 8, true);
 
 
-let tareasPendientes = [tareaAlbanil, tareaFotografo];
-let respuestaUsuario1 = prompt("¿Queres agregar la tarea de programador? \n1-Si \n2-No");
+// let tareasPendientes = [tareaAlbanil, tareaFotografo];
+// let respuestaUsuario1 = prompt("¿Queres agregar la tarea de programador? \n1-Si \n2-No");
 
-if(resrespuestaUsuario1 == "1") {
-    agregarTarea(tareaProgramdor);
-} else {
-    console.log("ok");
-}
+// if(resrespuestaUsuario1 == "1") {
+//     agregarTarea(tareaProgramdor);
+// } else {
+//     console.log("ok");
+// }
 
-function agregarTarea(tarea) {
-    tareasPendientes.push(tarea);
-}
+// function agregarTarea(tarea) {
+//     tareasPendientes.push(tarea);
+// }
 
-function eliminarTarea(tarea) {
-    tareasPendientes.pop(tarea);
-    tareasCompletadas.push(tarea);
-}
+// function eliminarTarea(tarea) {
+//     tareasPendientes.pop(tarea);
+//     tareasCompletadas.push(tarea);
+// }
 
-function mostrarTareas() {
-    console.log("\n\n\TAREAS\n\n")
-    for(i=0; i < tareasPendientes.length; i++) {
-        console.log("Trabajo: " + carritareasPendientes[i].trabajo + "\nHoras: " + tareasPendientes[i].horas + "\n\n");
-    }
-}
+// function mostrarTareas() {
+//     console.log("\n\n\TAREAS\n\n")
+//     for(i=0; i < tareasPendientes.length; i++) {
+//         console.log("Trabajo: " + carritareasPendientes[i].trabajo + "\nHoras: " + tareasPendientes[i].horas + "\n\n");
+//     }
+// }
 
-mostrarTareas();
+// mostrarTareas();
 
 
 
