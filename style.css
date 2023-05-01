@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --color-main: rgb(93, 105, 86, 1);
+    --color-boton: #AD6343;
+    --color-fondo: #EDE5DF;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    background-color: var(--color-fondo);
+}
+
+.nav_color {
+    background-color: var(--color-fondo);
+    
+}
+
+.container_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-main);
+    padding: .5rem;
+    margin-bottom: .5rem;
+    
+}
+
+.imagen_logo {
+    height: 20rem;
+}
+
+.titulo_catalogo {
+    font-weight: bold;
+    background-color:var(--color-fondo) ;
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+.menu_categorias {
+    display: flex;
+    flex-direction: column;
+}
+
+.boton_categorias {
+    width: 7rem;
+    height: 2.5rem;
+    border-radius: .8rem;
+    text-align: center;
+    background-color: var(--color-fondo);
+    margin-bottom: .5rem;   
+    cursor: pointer;  
+    
+}
+
+.icono_carrito {
+    margin-right: 1rem;
+}
+
+/* main */
+
+.main_container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.producto_imagen {
+    max-width: 100%;
+    border-radius: 1rem;
+    
+}
+
+.producto_detalles {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    background-color: var(--color-boton);
+    border-radius: .5rem;
+    color: var(--color-fondo);
+    padding: .5rem;
+    margin-top: -2rem;
+    position: relative;
+    
+}
+
+.producto_titulo {
+    font-size: 1rem;
+}
+
+.producto_agregar {
+    border: 0;
+    background-color: var(--color-fondo);
+    border-radius: .5rem;
+    width: 9rem;
+    cursor: pointer;
+    border: 1px solid var(--color-fondo);
+}
+
+.producto_agregar:hover {
+    background-color: var(--color-main);
+    color: var(--color-fondo);
+} 
+
+
+
+
+
+/* footer */
+
+.copy_container {
+    background-color: var(--color-main);
+    height: 5rem;
+    margin-top: .5rem;
+    
+}
+
+.copy_container p {
+    padding-top: 2rem;
+    text-align: center;
+}
