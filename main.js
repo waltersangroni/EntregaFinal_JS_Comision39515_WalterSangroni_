@@ -62,9 +62,9 @@ botonesAgregarAlCarrito.forEach(boton => {
 
 const botonesEliminarDelCarrito = document.querySelectorAll(".producto_eliminar")
 
-botonesEliminarDelCarrito.forEach(boton => {
-    boton.addEventListener('click', () => {
-      const producto = obtenerProducto(boton);
+botonesEliminarDelCarrito.forEach(botonDel => {
+    botonDel.addEventListener('click', () => {
+      const producto = obtenerProducto(botonDel);
       eliminarProducto(producto);
     });
   });
@@ -124,6 +124,7 @@ function crearTarjeta(producto, tipoTarjeta) {
                 <div class="producto_detalles">
                     <h2 class="producto_titulo">${producto.nombre}</h2>
                     <p class="producto_precio">$ ${producto.precio}</p>
+                    <p class="cantidad_producto">Cantidad:</p>
                     <button class="producto_eliminar" data-producto-id=${producto.id}>Eliminar del carrito</button>
                 </div>
                 `;
@@ -145,7 +146,9 @@ function agregarAlCarrito(producto) {
     // si el producto ya estaba en el carrito no lo muestro
     let yaExiste = carrito.includes(producto);
     if(yaExiste) {
-        aumentarCantidad(producto);
+        const cantidadAgregar = document.querySelector(".cantidad_producto")
+        cantidadAgregar.addEventListener("sumarRango", mismoProducto)       
+
     }
     else {
         const tarjeta = crearTarjeta(producto, "CARRITO");
@@ -153,15 +156,27 @@ function agregarAlCarrito(producto) {
     }
 
     carrito.push(producto);
+
+    // CHEQUEAR SI ESTA OK
+    const carritoStr = JSON.stringify(carrito)
+    localStorage.setItem("infoCarrito", carritoStr)
+    console.log(carritoStr)
+    const recuperarCarrito = JSON.parse(localStorage.getItem("infoCarrito"));
+    console.log(recuperarCarrito)
 }
 
-
-
-
-function aumentarCantidad(producto) {
+function mismoProducto(){
     producto.cantidad++;
-    //actualizar html con la cantidad nueva
 }
+
+
+
+// PENDIENTES: 
+// 1-CUANDO AGREGO EL MISMO PRODUCTO AL CARRITO TIENE QUE SUMAR 
+// 2-ELIMINAR PRODUCTO
+// 3-FUNCION SUMAR EL PRECIO TOTAL DE LOS PRODUCTOS AGREGADOS AL CARRITO
+// 4-AL COMPRAR Y ENVIAR FORMULARIO, SE TIENE QUE VACIAR EL CARRITO Y APARECER UN MENSAJE DE COMPRA FINALIZADA              
+
 
 //esta funcion me la paso chatGPT
 //function limpiarCarrito() {
@@ -176,3 +191,9 @@ function aumentarCantidad(producto) {
 // <button class="producto_agregar" data-producto_id=${producto.id}>Agregar al carrito</button>
 // tenemos un boton que tiene una clase "producto_agregar" y un data "producto_id" que lo llamas a traves de 
 // la funcion dataset, que es una funcion que ya existe de javascript
+
+        //  Cuenta el número de veces que se repite el producto
+        // const numeroUnidadesItem = carrito.reduce((total, itemId) => {
+        //      ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
+        //     return itemId === item ? total += 1 : total;
+        // }, 0);

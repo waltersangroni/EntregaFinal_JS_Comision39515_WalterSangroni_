@@ -147,7 +147,7 @@ header {
     background-color: rgb(146, 176, 128);
     padding: 1rem;
     margin: 1.5rem 1rem 4rem 1rem;
-
+    border-radius: .5rem;
 
 }
 
@@ -159,7 +159,14 @@ header {
     gap: 3rem;
     margin: 1rem;
     
-    
+     
+}
+
+.totalCompra {
+    background-color: rgb(146, 176, 128);
+    padding: .5rem;
+    margin: 1rem;
+    border-radius: .5rem;
 }
 
 /* Formulario */
