@@ -25,7 +25,7 @@
                 <div class="menu_categorias">
                     <li>
                         <button class="boton_categorias">
-                            <a  href="./pages/carrito.html">Carrito</a><i class="bi bi-cart4 icono_carrito"><span class="numerito">0</span></i> 
+                            <a  href="#seccion_carrito">Carrito</a><i class="bi bi-cart4 icono_carrito"></i> 
                         </button>                 
                     </li>
                     <li>
@@ -39,109 +39,40 @@
         </nav>
 
     <main class="main_container">
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda1.JPG" alt="modelos1">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda2.JPG" alt="modelos2">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda3.JPG" alt="modelos3">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda4.JPG" alt="modelos4">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda5.JPG" alt="modelos5">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda6.JPG" alt="modelos6">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda7.JPG" alt="modelos7">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda8.JPG" alt="modelos8">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda9.JPG" alt="modelos9">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda10.JPG" alt="modelos10">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda11.JPG" alt="modelos11">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
-        <section class="producto">
-            <img class="producto_imagen" src="./img/moda12.JPG" alt="modelos12">
-            <div class="producto_detalles">
-                <h2 class="producto_titulo">Remera negra</h2>
-                <p class="producto_precio">$4500</p>
-                <button class="producto_agregar">Agregar al carrito</button>
-            </div>
-        </section>
+
+        <!-- La lista de productos esta agregada con DOM -->
+
     </main>
+
+    <div id="seccion_carrito">
+        <h3 class="titulo_carrito_compras">Tu carrito de compras</h3>
+        <div  class="carrito_container">
+             <!-- Se tienen que sumar los productos seleccionados por el cliente -->
+        </div>
+       
+    </div>
+
+    <form class="formulario_container">
+        <h3>Formulario de Contacto</h3>
+        <label>Nombre y Apellido</label>
+        <input type="text" class="form-control" id="inputName" placeholder="Ingrese su Nombre y Apellido">
+        <label>Correo Electrónico</label>
+        <input type="email" class="form-control" id="inputEmail" placeholder="Ingrese su E-mail">
+        <div class="container-form">  
+            <button type="submit" class="btn btn-secondary" id="comprar_enviar">Comprar y Enviar Información</button>
+        </div>
+    </form>
+
 
     <footer>
         <div class="copy_container">
-            <p>© 2023 by Walter Sangroni. All rights reserved.</p>
+            <p class="copyright">© 2023 by Walter Sangroni. All rights reserved.</p>
         </div>
     </footer>
+
+    <div class="probando_agregar_array_objetos">
+
+    </div>
 
 
     <script src="./main.js"></script>

@@ -11,6 +11,7 @@
     --color-main: rgb(93, 105, 86, 1);
     --color-boton: #AD6343;
     --color-fondo: #EDE5DF;
+    
 }
 
 ul {
@@ -116,7 +117,62 @@ header {
     color: var(--color-fondo);
 } 
 
+.producto_eliminar {
+    border: 0;
+    background-color: var(--color-fondo);
+    border-radius: .5rem;
+    width: 9rem;
+    cursor: pointer;
+    border: 1px solid var(--color-fondo);
+}
 
+.producto_eliminar:hover {
+    background-color: var(--color-main);
+    color: var(--color-fondo);
+} 
+
+/* Carrito */
+
+.carrito_vacio {
+    background-color: rgb(146, 176, 128);
+    padding: 1rem;
+    margin: .3rem;
+}
+
+.carrito_vacio h1 {
+    font-size: 1.3rem;
+}
+
+.titulo_carrito_compras {
+    background-color: rgb(146, 176, 128);
+    padding: 1rem;
+    margin: 1.5rem 1rem 4rem 1rem;
+
+
+}
+
+.carrito_container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    gap: 3rem;
+    margin: 1rem;
+    
+    
+}
+
+/* Formulario */
+
+.formulario_container {
+    background-color: #EDE5DF;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1rem;
+    margin: .3rem;
+
+}
 
 
 
