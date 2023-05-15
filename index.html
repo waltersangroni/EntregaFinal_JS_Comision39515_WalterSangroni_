@@ -24,30 +24,41 @@
                 <li><h1 class="titulo_catalogo">Catalogo 2023</h1></li>
                 <div class="menu_categorias">
                     <li>
-                        <button class="boton_categorias">
+                        <button class="boton_categorias_carrito">
                             <a  href="#seccion_carrito">Carrito</a><i class="bi bi-cart4 icono_carrito"></i> 
                         </button>                 
                     </li>
-                    <li>
-                        <button class="boton_categorias">Mujer</button>
-                    </li>
-                    <li>
-                        <button class="boton_categorias">Hombre</button>
-                    </li>
+                    <div id="menu_categorias">
+                        <li>
+                            <button id="mujer" class="boton_categorias">Mujer</button>
+                        </li>
+                        <li>
+                            <button id="hombre" class="boton_categorias">Hombre</button>
+                        </li>
+                        <li>
+                            <button id="todos" class="boton_categorias">Todos los productos</button>
+                        </li>
+                    </div>
+
                 </div>
+            </ul>
+            <ul id="elementosFiltrados">
+
             </ul>
         </nav>
 
     <main class="main_container">
 
-        <!-- La lista de productos esta agregada con DOM -->
+        <!-- La lista de productos esta agregada con JS -->
 
     </main>
 
     <div id="seccion_carrito">
         <h3 class="titulo_carrito_compras">Tu carrito de compras</h3>
         <div  class="carrito_container">
+
              <!-- Se tienen que sumar los productos seleccionados por el cliente -->
+
         </div>
         <p class="totalCompra">Total de tu compra: $</p>
        

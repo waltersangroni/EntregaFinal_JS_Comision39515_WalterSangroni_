@@ -59,13 +59,24 @@ header {
 
 .boton_categorias {
     width: 7rem;
-    height: 2.5rem;
+    height: 3rem;
     border-radius: .8rem;
     text-align: center;
     background-color: var(--color-fondo);
-    margin-bottom: .5rem;   
+    margin-bottom: .8rem;   
     cursor: pointer;  
     
+}
+
+.boton_categorias_carrito {
+    width: 7rem;
+    height: 3rem;
+    border-radius: .8rem;
+    text-align: center;
+    background-color: var(--color-fondo);
+    margin-bottom: .8rem;   
+    cursor: pointer;  
+
 }
 
 .icono_carrito {
