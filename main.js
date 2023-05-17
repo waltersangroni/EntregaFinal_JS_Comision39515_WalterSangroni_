@@ -47,7 +47,7 @@ if(recuperarCarrito != null) {
         const tarjeta = crearTarjeta(producto, "CARRITO");
         mostrarTarjeta(tarjeta, contenedor_carrito);
         crearEventListenerDelBoton(tarjeta);
-        //actualizamos la cantidad que se muestra
+        //actualizo la cantidad que se muestra
         const textoACambiar = obtenerTexto(producto);
         textoACambiar.textContent = "Cantidad: " + producto.cantidad;
         //y lo agrego al carrito
@@ -139,7 +139,7 @@ function obtenerProducto(boton) {
     // obtengo el id del producto segun el boton que clickee
     const producto_id = boton.dataset.productoId; //ver abajo
 
-    // con esa id buscamos el producto en la lista
+    // con esa id busco el producto en la lista
     return producto = listaProductos.find((producto) => {return producto.id == producto_id;});
 }
 
@@ -178,8 +178,8 @@ function crearEventListenerDelBoton(tarjeta) {
         
     botonNuevo.addEventListener('click', () => {
         const producto = obtenerProducto(botonNuevo);
-        eliminarProducto(producto); // sacamos el producto de la lista carrito
-        eliminarTarjeta(tarjeta); // sacamos la tarjeta html de la pagina
+        eliminarProducto(producto); // saco el producto de la lista carrito
+        eliminarTarjeta(tarjeta); // saco la tarjeta html de la pagina
     });
 }
 
@@ -198,7 +198,7 @@ function eliminarProducto(producto){
 }
 
 function obtenerTexto(producto) {
-    const textosCantidad = document.querySelectorAll(".cantidad_producto"); //agarramos todos los textos con esta clase porque sino solo agarra el primer texto siempre
+    const textosCantidad = document.querySelectorAll(".cantidad_producto"); //agarro todos los textos con esta clase porque sino solo agarra el primer texto siempre
     const textosFiltrados = Array.from(textosCantidad).filter(function(texto) { //filtra el texto que tenga un data-producto-id = al producto que llego por parametro
         return texto.dataset.productoId == producto.id;
     });
