@@ -4,9 +4,6 @@ const carrito = [];
 const contenedor_catalogo = document.querySelector(".main_container")
 const contenedor_carrito = document.querySelector(".carrito_container")
 
-
-
-
 // Objetos
 
 function Producto(id, img, nombre, precio, categoria) {
@@ -40,9 +37,27 @@ const listaProductos = [
 
 // ---------------------MAIN---------------------
 
+// leo el localstorage por si ya hay productos en el carrito
+const recuperarCarrito = JSON.parse(localStorage.getItem("infoCarrito"))
+// si hay algo en el localstorage...
+if(recuperarCarrito != null) {
+    // por cada producto que tenia en el carrito del localstorage
+    for(let producto of recuperarCarrito) {
+        //muestro la tarjeta
+        const tarjeta = crearTarjeta(producto, "CARRITO");
+        mostrarTarjeta(tarjeta, contenedor_carrito);
+        crearEventListenerDelBoton(tarjeta);
+        //actualizamos la cantidad que se muestra
+        const textoACambiar = obtenerTexto(producto);
+        textoACambiar.textContent = "Cantidad: " + producto.cantidad;
+        //y lo agrego al carrito
+        carrito.push(producto);
+    }
+}
+
 // CARGAR CATALOGO
 
-cargarProductos();
+cargarProductos(listaProductos);
 
 // EVENTO AGREGAR PRODUCTOS AL CARRITO
 
@@ -57,15 +72,6 @@ botonesAgregarAlCarrito.forEach(boton => {
   });
 });
 
-// let carritoLocalStorage = localStorage.getItem("infoCarrito");
-// if (carritoLocalStorage) {
-//     infoCarrito = JSON.parse(carritoLocalStorage);
-// } else {
-//     infoCarrito = [ ];
-// }
-
-
-
 // EVENTO FORMULARIO
 
 const formularioContainer = document.querySelector(".formulario_container")
@@ -76,14 +82,18 @@ formularioContainer.addEventListener("submit", validarFormulario)
 
 function validarFormulario(e){
     e.preventDefault()
+    //borrar estos consolelogs
     console.log(`Nombre: ${input_Name.value}`)
     console.log(`Email: ${input_Email.value}`)
+    //subir nombre y mail al localstorage
+    //cartelito de felicidades por su compra
+    //vaciar carrito
 }
 
 // ---------------------FUNCIONES---------------------
 
-function cargarProductos() {
-    for (let producto of listaProductos){
+function cargarProductos(listaAMostrar) {
+    for (let producto of listaAMostrar){
         const tarjeta = crearTarjeta(producto, "CATALOGO");
         mostrarTarjeta(tarjeta, contenedor_catalogo);
     }
@@ -160,7 +170,6 @@ function actualizarLocalStorage(){
     // CHEQUEAR SI ESTA OK
     const carritoStr = JSON.stringify(carrito)
     localStorage.setItem("infoCarrito", carritoStr)
-    const recuperarCarrito = JSON.parse(localStorage.getItem("infoCarrito"));
 }
 
 function crearEventListenerDelBoton(tarjeta) {
@@ -193,7 +202,7 @@ function obtenerTexto(producto) {
     const textosFiltrados = Array.from(textosCantidad).filter(function(texto) { //filtra el texto que tenga un data-producto-id = al producto que llego por parametro
         return texto.dataset.productoId == producto.id;
     });
-    return textosFiltrados[0]; // filter devuelve una lista con el unico elemento que cumple el filtro que es el que queremos, pero sigue siendo una lista, asi que para poder usar el textContent tenemos que agarrar el elemento dentro de esa lista con [0]
+    return textosFiltrados[0]; 
 }
 
 let total_compra = carrito.reduce((acum, producto)=>{
@@ -204,65 +213,47 @@ console.log(total_compra);
 
 // FILTRO DE CATEGORIAS -------------------------
 
-function filtrarElementos() {
+function filtrarElementos(filtro) {
     contenedor_catalogo.innerHTML = "";
 
-    let filtro = document.querySelector("#menu_categorias").value;
     let elementosFiltrados = [];
 
     if (filtro === "todos") {
         elementosFiltrados = listaProductos;
-
     } else {
-        elementosFiltrados = listaProductos.filter(function(listaProductos){
-            return listaProductos.categoria === filtro;
+        elementosFiltrados = listaProductos.filter(function(productoAFiltrar){
+            return productoAFiltrar.categoria === filtro;
         });
     }
 
-    mostrarElementos (elementosFiltrados);
+    mostrarElementos(elementosFiltrados);
 }
 
-console.log(filtrarElementos) 
-
-function mostrarElementos(listaProductos) {
+function mostrarElementos(listaProductosFiltrados) {
     const listaElementos = document.querySelector("#elementosFiltrados");
     listaElementos.innerHTML = "";
 
-    listaProductos.forEach(function(listaProductos){
-        const li = document.createElement("li");
-        li.textContent = listaProductos.nombre;
-        listaElementos.appendChild(li);
-    })
+    cargarProductos(listaProductosFiltrados);
+
+    const botonesAgregarAlCarrito = document.querySelectorAll('.producto_agregar');
+
+    botonesAgregarAlCarrito.forEach(boton => {
+      boton.addEventListener('click', () => {
+        const producto = obtenerProducto(boton);
+        agregarAlCarrito(producto);
+      });
+    }); 
 }
 
-console.log(mostrarElementos)
+const botones = document.querySelectorAll(".boton_categorias");
 
-document.getElementById("menu_categorias").addEventListener("change", filtrarElementos);
-console.log(filtrarElementos)
-
+botones.forEach(boton => {
+    boton.addEventListener("click", () => {
+        filtrarElementos(boton.value);
+    });
+});
 
 // PENDIENTES: 
 // 1-CUANDO ELIMINO UN PRODUCTO DEL CARRITO SE TIENE QUE MODIFICAR LA CANTIDAD
 // 2-FUNCION SUMAR EL PRECIO TOTAL DE LOS PRODUCTOS AGREGADOS AL CARRITO
 // 3-AL COMPRAR Y ENVIAR FORMULARIO, SE TIENE QUE VACIAR EL CARRITO Y APARECER UN MENSAJE DE COMPRA FINALIZADA              
-// 4- HACER UN FILTRO DE PRODUCTOS
-
-//esta funcion me la paso chatGPT
-//function limpiarCarrito() {
-//    while (carritoContainer.firstChild) {
-//        carritoContainer.removeChild(carritoContainer.firstChild);
-//      }
-//}
-
-// Dom eliminar elemento se hace con .remove()
-
-// EXPLICACION DATASET
-// <button class="producto_agregar" data-producto_id=${producto.id}>Agregar al carrito</button>
-// tenemos un boton que tiene una clase "producto_agregar" y un data "producto_id" que lo llamas a traves de 
-// la funcion dataset, que es una funcion que ya existe de javascript
-
-        //  Cuenta el número de veces que se repite el producto
-        // const numeroUnidadesItem = carrito.reduce((total, itemId) => {
-        //      ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
-        //     return itemId === item ? total += 1 : total;
-        // }, 0);
