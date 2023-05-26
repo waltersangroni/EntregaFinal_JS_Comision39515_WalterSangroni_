@@ -82,9 +82,11 @@ formularioContainer.addEventListener("submit", validarFormulario)
 
 function validarFormulario(e){
     e.preventDefault()
-    //borrar estos consolelogs
-    console.log(`Nombre: ${input_Name.value}`)
-    console.log(`Email: ${input_Email.value}`)
+    
+    localStorage.setItem("nombreUsuario", `${input_Name.value}`)
+    localStorage.setItem("nombreEmail", `${input_Email.value}`)
+
+
     //subir nombre y mail al localstorage
     //cartelito de felicidades por su compra
     //vaciar carrito
@@ -157,7 +159,9 @@ function agregarAlCarrito(producto) {
         carrito.push(producto);
     }
 
+    actualizarTotalCompra()
     actualizarLocalStorage();
+    
 }
 
 function mismoProducto(producto){
@@ -176,10 +180,21 @@ function crearEventListenerDelBoton(tarjeta) {
     const botonesEliminarDelCarrito = document.querySelectorAll(".producto_eliminar");
     const botonNuevo = ultimoElemento(botonesEliminarDelCarrito);
         
+    // boton eliminar del carrito
     botonNuevo.addEventListener('click', () => {
         const producto = obtenerProducto(botonNuevo);
-        eliminarProducto(producto); // saco el producto de la lista carrito
-        eliminarTarjeta(tarjeta); // saco la tarjeta html de la pagina
+        
+        if(producto.cantidad==1) {
+            eliminarProducto(producto); // saco el producto de la lista carrito
+            eliminarTarjeta(tarjeta); // saco la tarjeta html de la pagina
+        } else {
+            producto.cantidad--;
+            const textoACambiar = obtenerTexto(producto);
+            textoACambiar.textContent = "Cantidad: " + producto.cantidad;
+        }
+
+        actualizarTotalCompra()
+        actualizarLocalStorage();
     });
 }
 
@@ -194,7 +209,6 @@ function eliminarTarjeta(tarjeta){
 function eliminarProducto(producto){
     const productoAEliminar = carrito.indexOf(producto);
     carrito.splice(productoAEliminar, 1);
-    actualizarLocalStorage();
 }
 
 function obtenerTexto(producto) {
@@ -204,12 +218,6 @@ function obtenerTexto(producto) {
     });
     return textosFiltrados[0]; 
 }
-
-let total_compra = carrito.reduce((acum, producto)=>{
-    return acum + producto.precio
-}, 0)
-
-console.log(total_compra);
 
 // FILTRO DE CATEGORIAS -------------------------
 
@@ -253,7 +261,20 @@ botones.forEach(boton => {
     });
 });
 
+
+function actualizarTotalCompra(){
+    let total_Compra = carrito.reduce((acum, producto)=>{
+        return acum + (producto.precio * producto.cantidad)
+        
+    }, 0)
+    localStorage.setItem("precioTotalCompra", total_Compra);
+    document.querySelector(".totalCompra").textContent = "El total de tu compra es: $" + total_Compra;
+    
+}
+
+actualizarTotalCompra()
+
+
+
 // PENDIENTES: 
-// 1-CUANDO ELIMINO UN PRODUCTO DEL CARRITO SE TIENE QUE MODIFICAR LA CANTIDAD
-// 2-FUNCION SUMAR EL PRECIO TOTAL DE LOS PRODUCTOS AGREGADOS AL CARRITO
 // 3-AL COMPRAR Y ENVIAR FORMULARIO, SE TIENE QUE VACIAR EL CARRITO Y APARECER UN MENSAJE DE COMPRA FINALIZADA              

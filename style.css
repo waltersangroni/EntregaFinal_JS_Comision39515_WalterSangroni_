@@ -24,6 +24,9 @@ a {
 
 header {
     background-color: var(--color-fondo);
+    margin: .5rem;
+    border-radius: .5rem;
+    border: 1px solid black;
 }
 
 .nav_color {
@@ -37,12 +40,21 @@ header {
     align-items: center;
     background-color: var(--color-main);
     padding: .5rem;
-    margin-bottom: .5rem;
+    margin: .5rem;
+    border-radius: .5rem;
+    border: 1px solid black;
     
+}
+
+.img_logo_fashion {
+    margin: .5rem;
+    border-radius: .5rem;
+    border: 1px solid black;
 }
 
 .imagen_logo {
     height: 20rem;
+
 }
 
 .titulo_catalogo {
@@ -55,6 +67,7 @@ header {
 .menu_categorias {
     display: flex;
     flex-direction: column;
+    
 }
 
 .boton_categorias {
@@ -89,6 +102,9 @@ header {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
+    margin: .5rem;
+    border-radius: .5rem;
+    
 }
 
 .producto_imagen {
@@ -159,6 +175,7 @@ header {
     padding: 1rem;
     margin: 1.5rem 1rem 4rem 1rem;
     border-radius: .5rem;
+    border: 1px solid black;
 
 }
 
@@ -168,17 +185,22 @@ header {
     justify-content: space-around;
     align-items: center;
     gap: 3rem;
-    margin: 1rem;
-    
+    margin: 1rem;    
      
 }
 
 .totalCompra {
     background-color: rgb(146, 176, 128);
+    font-weight: bold;
     padding: .5rem;
     margin: 1rem;
     border-radius: .5rem;
+    cursor: pointer;
+    border: 1px solid black;
+    width: 17rem;
+    
 }
+
 
 /* Formulario */
 
@@ -189,21 +211,24 @@ header {
     gap: .5rem;
     padding: 1rem;
     margin: .3rem;
+    border: 1px solid black;
+    border-radius: .5rem;
 
 }
-
-
 
 /* footer */
 
 .copy_container {
     background-color: var(--color-main);
-    height: 5rem;
-    margin-top: .5rem;
+    height: 2rem;
+    margin: .3rem;
+    border: 1px solid black;
+    border-radius: .5rem;
     
 }
 
 .copy_container p {
-    padding-top: 2rem;
+    padding-top: .5rem;
     text-align: center;
+    font-size: .8rem;
 }
