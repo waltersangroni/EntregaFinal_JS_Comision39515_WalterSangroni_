@@ -1,5 +1,6 @@
 // Variables globales
 
+const listaProductos = [];
 const carrito = [];
 const contenedor_catalogo = document.querySelector(".main_container")
 const contenedor_carrito = document.querySelector(".carrito_container")
@@ -15,84 +16,110 @@ function Producto(id, img, nombre, precio, categoria) {
   this.categoria = categoria;
 }
 
-const producto1 = new Producto("1", "img/moda1.JPG", "Remera negra", 3500, "hombre");
-const producto2 = new Producto("2","img/moda2.JPG", "Remera y pantalon", 6500, "mujer");
-const producto3 = new Producto("3","img/moda3.JPG","Remara blanca", 3500, "hombre");
-const producto4 = new Producto("4","img/moda4.JPG","Piloto lluvia", 9500, "mujer");
-const producto5 = new Producto("5","img/moda5.JPG","Saco otoño", 8500, "hombre");
-const producto6 = new Producto("6","img/moda6.JPG","Remera verde", 3000, "mujer");
-const producto7 = new Producto("7","img/moda7.JPG","Camisa", 4500, "mujer");
-const producto8 = new Producto("8","img/moda8.JPG","Musculosa", 3000, "hombre");
-const producto9 = new Producto("9","img/moda9.JPG","Pollera", 4500, "mujer");
-const producto10 = new Producto("10","img/moda10.JPG","Remera clasica", 2500, "mujer");
-const producto11 = new Producto("11","img/moda11.JPG","Pantalon", 5500, "hombre");
-const producto12 = new Producto("12","img/moda12.JPG","Camisa verde", 4500, "hombre");
 
-// Arrays
+// Init
 
-const listaProductos = [
-    producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8, producto9, producto10, producto11, producto12
-];
+pedirProductos()
+    .then(() => {
+        cargarProductos(listaProductos)
+        crearBotonesAgregarAlCarrito()
+    }) 
+    .catch((error) => {
+        console.error("Ocurrió un error al obtener los productos:", error);
+    });
 
+recuperarCarritoDelLocalStorage()
 
-// ---------------------MAIN---------------------
+crearBotonesCategorias()
 
-// leo el localstorage por si ya hay productos en el carrito
-const recuperarCarrito = JSON.parse(localStorage.getItem("infoCarrito"))
-// si hay algo en el localstorage...
-if(recuperarCarrito != null) {
-    // por cada producto que tenia en el carrito del localstorage
-    for(let producto of recuperarCarrito) {
-        //muestro la tarjeta
-        const tarjeta = crearTarjeta(producto, "CARRITO");
-        mostrarTarjeta(tarjeta, contenedor_carrito);
-        crearEventListenerDelBoton(tarjeta);
-        //actualizo la cantidad que se muestra
-        const textoACambiar = obtenerTexto(producto);
-        textoACambiar.textContent = "Cantidad: " + producto.cantidad;
-        //y lo agrego al carrito
-        carrito.push(producto);
-    }
+crearEventoFormulario()
+
+// Funciones
+
+function crearEventoFormulario() {
+    const formularioContainer = document.querySelector(".formulario_container")
+
+    formularioContainer.addEventListener("submit", validarFormulario)
 }
-
-// CARGAR CATALOGO
-
-cargarProductos(listaProductos);
-
-// EVENTO AGREGAR PRODUCTOS AL CARRITO
-
-// agarro todos los botones del catalogo
-const botonesAgregarAlCarrito = document.querySelectorAll('.producto_agregar');
-
-// para cada boton agrego un eventListener
-botonesAgregarAlCarrito.forEach(boton => {
-  boton.addEventListener('click', () => {
-    const producto = obtenerProducto(boton);
-    agregarAlCarrito(producto);
-  });
-});
-
-// EVENTO FORMULARIO
-
-const formularioContainer = document.querySelector(".formulario_container")
-const input_Name = document.querySelector("#inputName")
-const input_Email = document.querySelector("#inputEmail")
-
-formularioContainer.addEventListener("submit", validarFormulario)
 
 function validarFormulario(e){
     e.preventDefault()
     
-    localStorage.setItem("nombreUsuario", `${input_Name.value}`)
-    localStorage.setItem("nombreEmail", `${input_Email.value}`)
+    const input_Name = document.querySelector("#inputName")
+    const input_Email = document.querySelector("#inputEmail")
 
+    let nombre = input_Name.value
+    let email = input_Email.value
 
-    //subir nombre y mail al localstorage
-    //cartelito de felicidades por su compra
-    //vaciar carrito
+    if(nombre == "" || email == "") {
+        Swal.fire('Por favor ponga su nombre y su mail para confirmar su compra');
+        return
+    } else {
+        Swal.fire('Gracias por su compra!!! en breve nos comunicaremos para coordinar la entrega.');
+
+        localStorage.setItem("nombreUsuario", nombre)
+        localStorage.setItem("nombreEmail", email)
+
+        vaciarCarrito();
+    }
 }
 
-// ---------------------FUNCIONES---------------------
+function vaciarCarrito() {
+    carrito.splice(0, carrito.length);
+
+    contenedor_carrito.innerHTML = '';
+
+    actualizarTotalCompra()
+    actualizarLocalStorage();
+  }
+
+function recuperarCarritoDelLocalStorage() {
+    // leo el localstorage por si ya hay productos en el carrito
+    const recuperarCarrito = JSON.parse(localStorage.getItem("infoCarrito"))
+    // si hay algo en el localstorage...
+    if(recuperarCarrito != null) {
+        // por cada producto que tenia en el carrito del localstorage
+        for(let producto of recuperarCarrito) {
+            //muestro la tarjeta
+            const tarjeta = crearTarjeta(producto, "CARRITO");
+            mostrarTarjeta(tarjeta, contenedor_carrito);
+            crearBotones(tarjeta);
+            //actualizo la cantidad que se muestra
+            const textoACambiar = obtenerTexto(producto);
+            textoACambiar.textContent = "Cantidad: " + producto.cantidad;
+            //y lo agrego al carrito
+            carrito.push(producto);
+        }
+    }
+    actualizarTotalCompra()
+}
+
+function crearBotonesAgregarAlCarrito() {
+    const botonesAgregarAlCarrito = document.querySelectorAll('.producto_agregar');
+    
+    botonesAgregarAlCarrito.forEach(boton => {
+        boton.addEventListener('click', () => {
+            const producto = obtenerProducto(boton);
+            agregarAlCarrito(producto);
+        });
+    });
+}
+
+function pedirProductos() {
+    return new Promise(async (resolve, reject) => {
+      const resp = await fetch("/data.json");
+      const data = await resp.json();
+  
+      data.forEach((producto) => {
+        const nuevoProducto = new Producto(producto.id, producto.img, producto.nombre, producto.precio, producto.categoria);
+        listaProductos.push(nuevoProducto);
+      });
+  
+      resolve(); // Resolvemos la Promesa una vez que la operación ha finalizado
+    }).catch((error) => {
+      return Promise.reject(error); // Rechazamos la Promesa en caso de error
+    });
+  }
 
 function cargarProductos(listaAMostrar) {
     for (let producto of listaAMostrar){
@@ -128,7 +155,10 @@ function crearTarjeta(producto, tipoTarjeta) {
                     <h2 class="producto_titulo">${producto.nombre}</h2>
                     <p class="producto_precio">$ ${producto.precio}</p>
                     <p class="cantidad_producto" data-producto-id=${producto.id}>Cantidad: 1</p>
-                    <button class="producto_eliminar" data-producto-id=${producto.id}>Eliminar del carrito</button>
+                    <button class="menos" data-producto-id=${producto.id}><i class="fas fa-minus"></i></button>
+                    <button class="mas" data-producto-id=${producto.id}><i class="fa fa-plus"></i></button>
+                    <button class="producto_eliminar" data-producto-id=${producto.id}><i class="far fa-trash-alt"></i></button>
+
                 </div>
                 `;
             break;
@@ -139,7 +169,7 @@ function crearTarjeta(producto, tipoTarjeta) {
 
 function obtenerProducto(boton) {
     // obtengo el id del producto segun el boton que clickee
-    const producto_id = boton.dataset.productoId; //ver abajo
+    const producto_id = boton.dataset.productoId;
 
     // con esa id busco el producto en la lista
     return producto = listaProductos.find((producto) => {return producto.id == producto_id;});
@@ -149,12 +179,12 @@ function agregarAlCarrito(producto) {
     // si el producto ya estaba en el carrito no lo muestro
     let yaExiste = carrito.includes(producto);
     if(yaExiste) {
-        mismoProducto(producto);
+        //no hago nada
     }
     else {
         const tarjeta = crearTarjeta(producto, "CARRITO");
         mostrarTarjeta(tarjeta, contenedor_carrito);
-        crearEventListenerDelBoton(tarjeta);
+        crearBotones(tarjeta);
 
         carrito.push(producto);
     }
@@ -164,34 +194,54 @@ function agregarAlCarrito(producto) {
     
 }
 
-function mismoProducto(producto){
-    producto.cantidad++;
-    const textoACambiar = obtenerTexto(producto);
-    textoACambiar.textContent = "Cantidad: " + producto.cantidad;
-} 
-
 function actualizarLocalStorage(){
     // CHEQUEAR SI ESTA OK
     const carritoStr = JSON.stringify(carrito)
     localStorage.setItem("infoCarrito", carritoStr)
 }
 
-function crearEventListenerDelBoton(tarjeta) {
+function crearBotones(tarjeta) {
     const botonesEliminarDelCarrito = document.querySelectorAll(".producto_eliminar");
-    const botonNuevo = ultimoElemento(botonesEliminarDelCarrito);
+    const botonEliminar = ultimoElemento(botonesEliminarDelCarrito);
+
+    const botonesSumar = document.querySelectorAll(".mas");
+    const botonSumar = ultimoElemento(botonesSumar);
+    
+    const botonesRestar = document.querySelectorAll(".menos");
+    const botonRestar = ultimoElemento(botonesRestar);
+
+    botonSumar.addEventListener('click', () => {
+        const producto = obtenerProducto(botonSumar);
+                 
+        producto.cantidad++;
+        const textoACambiar = obtenerTexto(producto);
+        textoACambiar.textContent = "Cantidad: " + producto.cantidad;
+
+        actualizarTotalCompra()
+        actualizarLocalStorage();
+       
+    });
+
+    botonRestar.addEventListener('click', () => {
+        const producto = obtenerProducto(botonRestar);
         
-    // boton eliminar del carrito
-    botonNuevo.addEventListener('click', () => {
-        const producto = obtenerProducto(botonNuevo);
-        
-        if(producto.cantidad==1) {
-            eliminarProducto(producto); // saco el producto de la lista carrito
-            eliminarTarjeta(tarjeta); // saco la tarjeta html de la pagina
-        } else {
+        if(producto.cantidad > 1){          
             producto.cantidad--;
             const textoACambiar = obtenerTexto(producto);
             textoACambiar.textContent = "Cantidad: " + producto.cantidad;
-        }
+
+            actualizarTotalCompra()
+            actualizarLocalStorage();
+        } 
+    });
+        
+    // boton eliminar del carrito
+    botonEliminar.addEventListener('click', () => {
+        const producto = obtenerProducto(botonEliminar);
+
+        producto.cantidad = 0;
+        eliminarProducto(producto); // saco el producto de la lista carrito
+        eliminarTarjeta(tarjeta); // saco la tarjeta html de la pagina
 
         actualizarTotalCompra()
         actualizarLocalStorage();
@@ -218,8 +268,6 @@ function obtenerTexto(producto) {
     });
     return textosFiltrados[0]; 
 }
-
-// FILTRO DE CATEGORIAS -------------------------
 
 function filtrarElementos(filtro) {
     contenedor_catalogo.innerHTML = "";
@@ -253,14 +301,15 @@ function mostrarElementos(listaProductosFiltrados) {
     }); 
 }
 
-const botones = document.querySelectorAll(".boton_categorias");
+function crearBotonesCategorias() {
+    const botones = document.querySelectorAll(".boton_categorias");
 
-botones.forEach(boton => {
-    boton.addEventListener("click", () => {
-        filtrarElementos(boton.value);
+    botones.forEach(boton => {
+        boton.addEventListener("click", () => {
+            filtrarElementos(boton.value);
+        });
     });
-});
-
+}
 
 function actualizarTotalCompra(){
     let total_Compra = carrito.reduce((acum, producto)=>{
@@ -268,13 +317,5 @@ function actualizarTotalCompra(){
         
     }, 0)
     localStorage.setItem("precioTotalCompra", total_Compra);
-    document.querySelector(".totalCompra").textContent = "El total de tu compra es: $" + total_Compra;
-    
-}
-
-actualizarTotalCompra()
-
-
-
-// PENDIENTES: 
-// 3-AL COMPRAR Y ENVIAR FORMULARIO, SE TIENE QUE VACIAR EL CARRITO Y APARECER UN MENSAJE DE COMPRA FINALIZADA              
+    document.querySelector(".totalCompra").textContent = "El total de tu compra es: $" + total_Compra; 
+}          

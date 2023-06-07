@@ -1,5 +1,87 @@
+
+[{
+    "id": "1",
+    "img": "img/moda1.JPG",
+    "nombre": "Remera negra",  
+    "precio": 3500,
+    "categoria": "hombre"
+},
 {
-
-
-    
+    "id": "2",
+    "img": "img/moda2.JPG",
+    "nombre": "Remera y pantalon",  
+    "precio": 6500,
+    "categoria": "mujer"
+},
+{
+    "id": "3",
+    "img": "img/moda3.JPG",
+    "nombre": "Remara blanca",  
+    "precio": 3500,
+    "categoria": "hombre"
+},
+{
+    "id": "4",
+    "img": "img/moda4.JPG",
+    "nombre": "Piloto lluvia",  
+    "precio": 9500,
+    "categoria": "mujer"
+},
+{
+    "id": "5",
+    "img": "img/moda5.JPG",
+    "nombre": "Saco otoño",  
+    "precio": 8500,
+    "categoria": "hombre"
+},
+{
+    "id": "6",
+    "img": "img/moda6.JPG",
+    "nombre": "Remera verde",  
+    "precio": 3000,
+    "categoria": "mujer"
+},
+{
+    "id": "7",
+    "img": "img/moda7.JPG",
+    "nombre": "Camisa",  
+    "precio": 4500,
+    "categoria": "mujer"
+},
+{
+    "id": "8",
+    "img": "img/moda8.JPG",
+    "nombre": "Musculosa",  
+    "precio": 3000,
+    "categoria": "hombre"
+},
+{
+    "id": "9",
+    "img": "img/moda9.JPG",
+    "nombre": "Pollera",  
+    "precio": 4500,
+    "categoria": "mujer"
+},
+{
+    "id": "10",
+    "img": "img/moda10.JPG",
+    "nombre": "Remera clasica",  
+    "precio": 2500,
+    "categoria": "mujer"
+},
+{
+    "id": "11",
+    "img": "img/moda11.JPG",
+    "nombre": "Pantalon",  
+    "precio": 5500,
+    "categoria": "hombre"
+},
+{
+    "id": "12",
+    "img": "img/moda12.JPG",
+    "nombre": "Camisa verde",  
+    "precio": 4500,
+    "categoria": "hombre"
 }
+
+]
